@@ -162,3 +162,30 @@ file '/var/run/motd' do
   action :create
 end
 ```
+
+Ok, lets see it!
+```
+W:\repo\docker-seminar-tdi\motd>kitchen verify ubuntu
+-----> Starting Kitchen (v1.4.0)
+-----> Verifying <default-ubuntu-1204>...
+$$$$$$ Running legacy verify for 'Docker' Driver
+       Preparing files for transfer
+       Removing /tmp/verifier/suites/serverspec
+       Transferring files to <default-ubuntu-1204>
+-----> Running serverspec test suite
+       /opt/chef/embedded/bin/ruby -I/tmp/verifier/suites/serverspec -I/tmp/verifier/gems/gems/rspec-support-3.2.2/lib:/tmp/verifier/gems/gems/rspec-core-3.2.3/lib /opt/chef/embedded/bin/rspec --pattern /tmp/verifier/suites/serverspec/\*\*/\*_spec.rb --color --format documentation --default-path /tmp/verifier/suites/serverspec
+
+       motd::default
+         File "/var/run/motd"
+           should be file
+           should be mode 644
+           should contain "hellooooo"
+
+       Finished in 0.1236 seconds (files took 0.30404 seconds to load)
+       3 examples, 0 failures
+
+       Finished verifying <default-ubuntu-1204> (0m1.43s).
+-----> Kitchen is finished. (0m3.66s)
+```
+
+Weeeeee, green tests! :-)
