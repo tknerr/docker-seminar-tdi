@@ -3,7 +3,7 @@
 
 Code repository for my HL docker seminar talk about [Test-Driven Infrastructure with Docker, ServerSpec and KitchenCI](http://slides.com/tknerr/tdi-with-kitchenci-and-docker/live#/)
 
-Below are the steps from the "Demo Time!" part for you to follow.
+Below are the steps from the "Demo Time!" part for you to follow. For the demo I used the [Bill's Kitchen DevPack](https://github.com/tknerr/bills-kitchen) which includes Docker 1.6.0 (with boot2docker) and KitchenCI 1.4.0.
 
 ## Generate the motd Cookbook
 
