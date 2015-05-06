@@ -149,7 +149,7 @@ $$$$$$ Running legacy verify for 'Docker' Driver
 ## Fix the test by placing the motd file
 
 Ok, so let's edit `recipes/default.rb` and add a simple motd file:
-```
+```ruby
 #
 # Cookbook Name:: motd
 # Recipe:: default
