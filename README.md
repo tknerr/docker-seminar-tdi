@@ -101,9 +101,10 @@ describe 'motd::default' do
   # Serverspec examples can be found at
   # http://serverspec.org/resource_types.html
 
-  describe file('/etc/motd') do
+  describe file('/var/run/motd') do
     it { should be_file }
     it { should be_mode 644 }
+    it { should contain "hellooooo" }
   end
 end
 ```
@@ -111,7 +112,7 @@ end
 
 Now run `kitchen verify 1204` to converge the node and see the tests failing:
 ```
-W:\repo\docker-seminar-tdi\motd>kitchen verify 1204
+W:\repo\docker-seminar-tdi\motd>kitchen verify ubuntu
 -----> Starting Kitchen (v1.4.0)
 -----> Verifying <default-ubuntu-1204>...
 $$$$$$ Running legacy verify for 'Docker' Driver
@@ -122,25 +123,26 @@ $$$$$$ Running legacy verify for 'Docker' Driver
        /opt/chef/embedded/bin/ruby -I/tmp/verifier/suites/serverspec -I/tmp/verifier/gems/gems/rspec-support-3.2.2/lib:/tmp/verifier/gems/gems/rspec-core-3.2.3/lib /opt/chef/embedded/bin/rspec --pattern /tmp/verifier/suites/serverspec/\*\*/\*_spec.rb --color --format documentation --default-path /tmp/verifier/suites/serverspec
 
        motd::default
-         File "/etc/motd"
+         File "/var/run/motd"
            should be file
-           should be mode 644 (FAILED - 1)
+           should be mode 644
+           should contain "hellooooo" (FAILED - 1)
 
        Failures:
 
-         1) motd::default File "/etc/motd" should be mode 644
-            Failure/Error: it { should be_mode 644 }
+         1) motd::default File "/var/run/motd" should contain "hellooooo"
+            Failure/Error: it { should contain "hellooooo" }
+              expected File "/var/run/motd" to contain "hellooooo"
+              /bin/sh -c grep\ -qs\ --\ hellooooo\ /var/run/motd\ \|\|\ grep\ -qFs\ --\ hellooooo\ /var/run/motd
 
-              /bin/sh -c stat\ -c\ \%a\ /etc/motd\ \|\ grep\ --\ \\\^644\\\$
+            # /tmp/verifier/suites/serverspec/default_spec.rb:11:in `block (3 levels) in <top (required)>'
 
-
-
-       Finished in 0.11802 seconds (files took 0.30409 seconds to load)
-       2 examples, 1 failure
+       Finished in 0.12986 seconds (files took 0.29833 seconds to load)
+       3 examples, 1 failure
 
        Failed examples:
 
-       rspec /tmp/verifier/suites/serverspec/default_spec.rb:10 # motd::default File "/etc/motd" should be mode 644
+       rspec /tmp/verifier/suites/serverspec/default_spec.rb:11 # motd::default File "/var/run/motd" should contain "hellooooo"
 ```
 
 
@@ -154,7 +156,7 @@ Ok, so let's edit `recipes/default.rb` and add a simple motd file:
 #
 # Copyright (c) 2015 The Authors, All Rights Reserved.
 
-file '/etc/motd' do
+file '/var/run/motd' do
   content "hellooooooooooo"
   mode "0644"
   action :create
