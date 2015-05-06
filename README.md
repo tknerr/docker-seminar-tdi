@@ -17,7 +17,7 @@ Running `kitchen test` with VirtualBox is sloooooooooooow, so let's fix that
 by creating a `.kitchen.docker.yml` file with the necessary overrides for the
 docker provisioner:
 
-```
+```yml
 ---
 driver:
   name: docker
