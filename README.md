@@ -142,3 +142,21 @@ $$$$$$ Running legacy verify for 'Docker' Driver
 
        rspec /tmp/verifier/suites/serverspec/default_spec.rb:10 # motd::default File "/etc/motd" should be mode 644
 ```
+
+
+## Fix the test by placing the motd file
+
+Ok, so let's edit `recipes/default.rb` and add a simple motd file:
+```
+#
+# Cookbook Name:: motd
+# Recipe:: default
+#
+# Copyright (c) 2015 The Authors, All Rights Reserved.
+
+file '/etc/motd' do
+  content "hellooooooooooo"
+  mode "0644"
+  action :create
+end
+```
